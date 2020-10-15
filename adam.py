@@ -1,7 +1,8 @@
+from numpy import zeros, square
 import numpy as  np
 
 
-def update_params_with_RMS(params, grads,s, beta, learning_rate):
+def update_params_with_Adam(params, grads,s, beta, learning_rate):
     
     # grads has the dw and db parameters from backprop
     # params  has the W and b parameters which we have to update 
@@ -13,12 +14,16 @@ def update_params_with_RMS(params, grads,s, beta, learning_rate):
         #updating parameters W and b
         params["W" + str(l)] = params["W" + str(l)] - learning_rate * grads['dW' + str(l)] / (np.sqrt( s["dW" + str(l)] )+ pow(10,-4))
         params["b" + str(l)] = params["b" + str(l)] - learning_rate * grads['db' + str(l)] / (np.sqrt( s["db" + str(l)]) + pow(10,-4))
-
     return params
 
-def initilization_RMS(params):
+def initilization_Adam(params):
     s = {}
+    v = {}
     for i in range(len(params)//2 ):
+
+        v["dW" + str(i)] = np.zeros(params["W" + str(i)].shape)
+        v["db" + str(i)] = np.zeros(params["b" + str(i)].shape)
+
         s["dW" + str(i)] = np.zeros(params["W" + str(i)].shape)
         s["db" + str(i)] = np.zeros(params["b" + str(i)].shape)
-    return s
+    return v, s
