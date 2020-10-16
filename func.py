@@ -10,6 +10,31 @@ def initilization(input_size,layer_size):
         params['b' + str(l)] = np.zeros((layer_size[l],1))
     return params
 
+def RandomMiniBatches(X, Y, MiniBatchSize):
+    m = X.shape[0]  
+    miniBatches = [] 
+    # Step 1: Shuffle (X, Y)
+    permutation = list(np.random.permutation(m))
+    shuffled_X = X[permutation, :]
+    shuffled_Y = Y[permutation, :].reshape((m,1))   #sure for uptpur shape
+
+    num_minibatches = m // MiniBatchSize 
+    for k in range(0, num_minibatches):
+        miniBatch_X = shuffled_X[k * MiniBatchSize:(k + 1) * MiniBatchSize,:]
+        miniBatch_Y = shuffled_Y[k * MiniBatchSize:(k + 1) * MiniBatchSize,:]
+        miniBatch = (miniBatch_X, miniBatch_Y)
+        miniBatches.append(miniBatch)
+    
+
+    if m % MiniBatchSize != 0:
+        # end = m - MiniBatchSize * m // MiniBatchSize
+        miniBatch_X = shuffled_X[num_minibatches * MiniBatchSize:, :]
+        miniBatch_Y = shuffled_Y[num_minibatches * MiniBatchSize:, :]
+
+        miniBatch = (miniBatch_X, miniBatch_Y)
+        miniBatches.append(miniBatch)
+    
+    return miniBatches
 
 #forward_propagations-----------------------------------------------
 def forward_activation(A_prev, w, b, activation):
