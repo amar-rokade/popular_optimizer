@@ -1,5 +1,11 @@
 import numpy as  np
 
+def initilization_RMS(params):
+    s = {}
+    for i in range(len(params)//2 ):
+        s["dW" + str(i)] = np.zeros(params["W" + str(i)].shape)
+        s["db" + str(i)] = np.zeros(params["b" + str(i)].shape)
+    return s
 
 def update_params_with_RMS(params, grads,s, beta, learning_rate):
     
@@ -16,9 +22,4 @@ def update_params_with_RMS(params, grads,s, beta, learning_rate):
 
     return params
 
-def initilization_RMS(params):
-    s = {}
-    for i in range(len(params)//2 ):
-        s["dW" + str(i)] = np.zeros(params["W" + str(i)].shape)
-        s["db" + str(i)] = np.zeros(params["b" + str(i)].shape)
-    return s
+

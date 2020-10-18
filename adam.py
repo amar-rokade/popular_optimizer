@@ -1,6 +1,6 @@
 import numpy as np
 def update_params_with_Adam(params, grads,v, s, beta1,beta2, learning_rate,t):
-    epsilon = pow(10,-8)
+    epsilon = pow(10,-8)    # avoiding to divide to zero
     v_corrected = {}                         
     s_corrected = {} 
     # grads has the dw and db parameters from backprop
