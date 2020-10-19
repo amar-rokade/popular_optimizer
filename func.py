@@ -3,6 +3,7 @@ from matplotlib import pyplot as plt
 
 def initilization(input_size,layer_size):
     params = {}
+    np.random.seed(0) 
     params['W' + str(0)] = np.random.randn(layer_size[0], input_size) * np.sqrt(2 / input_size)
     params['b' + str(0)] = np.zeros((layer_size[0], 1))
     for l in range(1,len(layer_size)):
